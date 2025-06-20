@@ -68,7 +68,7 @@ cd gh-finder
 uv pip install -e .
 
 # Run your first analysis
-./run.py --config repos_config.toml --token YOUR_GITHUB_TOKEN --analyze-prs
+uv run gh_finder --config repos_config.toml --token YOUR_GITHUB_TOKEN --analyze-prs
 ```
 
 ## 📦 Installation
@@ -105,12 +105,12 @@ uv pip install -e .
    export GITHUB_TOKEN="your_token_here"
    
    # Option 2: Pass directly
-   ./run.py --token YOUR_TOKEN --config repos_config.toml
+   uv run gh_finder --token YOUR_TOKEN --config repos_config.toml
    
    # Option 3: Use multiple tokens
    echo "token1" > tokens.txt
    echo "token2" >> tokens.txt
-   ./run.py --tokens-file tokens.txt --config repos_config.toml
+   uv run gh_finder --tokens-file tokens.txt --config repos_config.toml
    ```
 
 ## 📖 Usage
@@ -119,25 +119,25 @@ uv pip install -e .
 
 ```bash
 # Analyze repositories with smart hybrid approach
-./run.py --config repos_config.toml --token YOUR_TOKEN --analyze-prs
+uv run gh_finder --config repos_config.toml --token YOUR_TOKEN --analyze-prs
 
 # Fork-only analysis (API-friendly, quick discovery)
-./run.py --config repos_config.toml --token YOUR_TOKEN
+uv run gh_finder --config repos_config.toml --token YOUR_TOKEN
 
 # Analyze with limits
-./run.py --config repos_config.toml --token YOUR_TOKEN --limit 100
+uv run gh_finder --config repos_config.toml --token YOUR_TOKEN --limit 100
 
 # Resume from latest checkpoint (across all runs)
-./run.py --config repos_config.toml --token YOUR_TOKEN --resume latest
+uv run gh_finder --config repos_config.toml --token YOUR_TOKEN --resume latest
 
 # Resume from a specific run (uses latest checkpoint in that run)
-./run.py --config repos_config.toml --token YOUR_TOKEN --resume 20250115_143022
+uv run gh_finder --config repos_config.toml --token YOUR_TOKEN --resume 20250115_143022
 
 # Generate LLM analysis
-./run.py --config repos_config.toml --token YOUR_TOKEN --llm-output auto
+uv run gh_finder --config repos_config.toml --token YOUR_TOKEN --llm-output auto
 
 # Check all tokens' rate limit status
-./run.py --tokens-file tokens.txt --check-tokens
+uv run gh_finder --tokens-file tokens.txt --check-tokens
 ```
 
 ### Advanced Options
@@ -160,13 +160,13 @@ Generate comprehensive reports for AI-powered analysis:
 
 ```bash
 # Quick demo
-./llm_analysis_example.py YOUR_TOKEN
+uv run gh_finder.py --llm-output console --token YOUR_TOKEN
 
 # Full analysis with auto-named output
-./run.py --config repos_config.toml --token YOUR_TOKEN --llm-output auto
+uv run gh_finder --config repos_config.toml --token YOUR_TOKEN --llm-output auto
 
 # Output to console for immediate copying
-./run.py --config repos_config.toml --token YOUR_TOKEN --llm-output console
+uv run gh_finder --config repos_config.toml --token YOUR_TOKEN --llm-output console
 ```
 
 Then paste the output into Claude, GPT-4, or other LLMs with prompts like:
@@ -227,7 +227,7 @@ The tool automatically adjusts limits based on repository importance:
 1. **Start Small**: Test with 1-2 repositories first
 2. **Use Multiple Tokens**: Distribute load across tokens
    ```bash
-   ./run.py --tokens-file tokens.txt --config repos_config.toml
+   uv run gh_finder --tokens-file tokens.txt --config repos_config.toml
    ```
 3. **Monitor Rate Limits**: Use `--verbose` to see remaining API calls
 4. **Fork Analysis First**: Use fork-only mode for initial discovery
@@ -273,12 +273,12 @@ The tool automatically adjusts limits based on repository importance:
 **Rate Limit Errors**
 ```bash
 # Check all tokens status
-./run.py --tokens-file tokens.txt --check-tokens
+uv run gh_finder --tokens-file tokens.txt --check-tokens
 
 # Solution: Add more tokens
 echo "token1" > tokens.txt
 echo "token2" >> tokens.txt
-./run.py --tokens-file tokens.txt --config repos_config.toml
+uv run gh_finder --tokens-file tokens.txt --config repos_config.toml
 ```
 
 When all tokens are exhausted, the tool will:
@@ -291,19 +291,19 @@ When all tokens are exhausted, the tool will:
 **Checkpoint Not Found**
 ```bash
 # List available checkpoints organized by run
-./run.py --list-checkpoints
+uv run gh_finder --list-checkpoints
 
 # Resume from a specific run (latest checkpoint in that run)
-./run.py --resume 20250115_143022 --config repos_config.toml
+uv run gh_finder --resume 20250115_143022 --config repos_config.toml
 
 # Use specific checkpoint file
-./run.py --resume checkpoint_20250115_143022.json --config repos_config.toml
+uv run gh_finder --resume checkpoint_20250115_143022.json --config repos_config.toml
 ```
 
 **Memory Issues with Large Repos**
 ```bash
 # Use limits to control memory usage
-./run.py --config repos_config.toml --token YOUR_TOKEN --limit 50
+uv run gh_finder --config repos_config.toml --token YOUR_TOKEN --limit 50
 ```
 
 ## 🤝 Contributing
